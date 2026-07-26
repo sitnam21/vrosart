@@ -620,3 +620,56 @@ class App {
 
 // Start the app
 new App();
+
+const isProductPage = window.location.pathname.includes('/product-detail-site/');
+const base = isProductPage ? '../' : '';
+
+// Header FR
+const headerFR = document.getElementById('main-header-fr');
+if (headerFR) {
+    fetch(base + 'header-fr.html')
+        .then(r => r.text())
+        .then(data => {
+            headerFR.innerHTML = data;
+        });
+}
+
+// Header EN
+const headerEN = document.getElementById('main-header-en');
+if (headerEN) {
+    fetch(base + 'header-en.html')
+        .then(r => r.text())
+        .then(data => {
+            headerEN.innerHTML = data;
+        });
+}
+document.addEventListener('click', function (e) {
+    // 1. Clic sur le bouton du menu hamburger
+    const menuToggle = e.target.closest('#mobile-menu-toggle');
+    if (menuToggle) {
+        const mainNav = document.getElementById('main-nav');
+        if (mainNav) {
+            const isOpen = mainNav.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+
+            menuToggle.setAttribute('aria-expanded', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+        }
+        return;
+    }
+
+    // 2. Clic sur un lien à l'intérieur du menu mobile
+    const navLink = e.target.closest('#main-nav a');
+    if (navLink) {
+        const mainNav = document.getElementById('main-nav');
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+
+        if (mainNav) mainNav.classList.remove('active');
+        if (toggleBtn) {
+            toggleBtn.classList.remove('active');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+        document.body.style.overflow = 'auto';
+    }
+
+});

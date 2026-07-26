@@ -4,7 +4,7 @@
    =================================== */
 
 /* ===================================
-   RESET & BASE STYLES
+   1. RESET & BASE STYLES
    =================================== */
 * {
     margin: 0;
@@ -21,18 +21,18 @@
     --text-light: #666666;
     --border-color: #e5e5e5;
     --hover-bg: #f8f8f8;
-    
+
     /* Typography */
     --font-primary: 'Avenir', 'Helvetica Neue', Arial, sans-serif;
     --font-heading: 'Didot', 'Bodoni MT', 'Times New Roman', serif;
-    
+
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 2rem;
     --spacing-lg: 3rem;
     --spacing-xl: 4rem;
-    
+
     /* Layout */
     --max-width: 1200px;
     --header-height: 80px;
@@ -43,12 +43,25 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Flexbox sul body per spingere sempre il footer in fondo */
 body {
     font-family: var(--font-primary);
     color: var(--text-color);
     line-height: 1.6;
     background-color: var(--secondary-color);
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Il contenuto principale occupa lo spazio disponibile, il footer resta in fondo */
+main {
+    flex: 1;
+    min-width: 0; /* évite que main force le body à dépasser la largeur du viewport */
+    padding-top: var(--header-height); /* compensa l'header fisso */
 }
 
 img {
@@ -73,7 +86,7 @@ button {
 }
 
 /* ===================================
-   TYPOGRAPHY
+   2. TYPOGRAPHY
    =================================== */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
@@ -105,7 +118,74 @@ p {
 }
 
 /* ===================================
-   HEADER & NAVIGATION
+   3. UTILITIES
+   =================================== */
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.section {
+    padding: var(--spacing-xl) 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mb-lg {
+    margin-bottom: var(--spacing-lg);
+}
+
+.mt-lg {
+    margin-top: var(--spacing-lg);
+}
+
+.hidden {
+    display: none;
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-in;
+}
+
+.fade-in-up {
+    opacity: 0;
+    animation: fadeInUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===================================
+   4. LOADING STATES
+   =================================== */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ===================================
+   5. HEADER & NAVIGATION
    =================================== */
 .site-header {
     position: fixed;
@@ -136,11 +216,8 @@ p {
 .logo {
     display: flex;
     align-items: center;
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    letter-spacing: 0.05em;
-    font-weight: 400;
 }
+
 .logo a {
     display: flex;
     align-items: center;
@@ -177,6 +254,22 @@ p {
     font-weight: 400;
 }
 
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: clamp(10px, 0.9vw, 14px);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-left: 2rem; /* crea spazio prima del bottone login */
+}
+
+.lang-switcher .active {
+    font-weight: 600;
+    text-decoration: underline;
+}
+
 .login-btn {
     padding: clamp(4px, 0.4vw, 8px) clamp(12px, 1.2vw, 20px);
     font-size: clamp(10px, 0.9vw, 14px);
@@ -194,6 +287,7 @@ p {
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
     background: none;
     border: none;
@@ -209,7 +303,7 @@ p {
     transform-origin: center;
 }
 
-/* Hamburger → X animation */
+/* Animazione Hamburger -> X */
 .mobile-menu-toggle.active span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
 }
@@ -220,35 +314,44 @@ p {
     transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ===================================
-   MAIN CONTENT
-   =================================== */
-main {
-    margin-top: var(--header-height);
+/* Icona carrello nell'header */
+.cart-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-.section {
-    padding: var(--spacing-xl) 0;
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: #5a4a3a;
+    color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    display: none;
+    align-items: center;
+    justify-content: center;
 }
 
-.container {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
+.cart-badge.visible {
+    display: flex;
 }
-/* ===================================
-   HOME PAGE
-   =================================== */
-/* ===================================
-   HERO SECTION
-   =================================== */
 
-/* 1. 外部大容器：在大屏幕上居中 */
+/* ===================================
+   6. HOME PAGE / HERO SECTION
+   =================================== */
 .hero-wrapper {
     width: 100%;
-    background-color:var(--third-color);
+    background-color: var(--third-color);
     display: flex;
-    justify-content: center; /* 大屏幕居中 */
+    justify-content: center;
 }
 
 .hero-container {
@@ -256,19 +359,19 @@ main {
     width: 100%;
     max-width: 1600px;
     aspect-ratio: 16 / 12;
-    /* Fallback height for browsers that don't support aspect-ratio */
     margin: 0 auto;
     overflow: hidden;
     background-color: var(--third-color);
 }
 
-/* 2. 文字部分：改用百分比，并限制宽度 */
 .hero-text-box {
     position: absolute;
-    top: 14%;      /* 改用百分比，相对于 hero-container */
+    top: 14%;
     right: 8%;
-    width: 34%;    /* 限制宽度比例 */
+    width: 34%;
     z-index: 15;
+    animation: fadeInUp 1.2s ease-out forwards;
+    animation-delay: 0.2s;
 }
 
 .hero-text-box h1 {
@@ -277,14 +380,12 @@ main {
     line-height: 1.1;
     margin-bottom: 2%;
 }
+
 .hero-text-box p {
     font-size: clamp(0.8rem, 1.2vw, 1.1rem);
     line-height: 1.5;
     color: #444;
 }
-
-/* 3. 图片定位：统一使用百分比 (%) 替代 vw */
-/* 这样它们永远相对于 max-width 为 1600px 的容器定位 */
 
 .hero-collage {
     position: absolute;
@@ -294,12 +395,18 @@ main {
     height: 100%;
 }
 
+.hero-collage img {
+    height: auto;
+    object-fit: contain;
+}
+
 .img-wave {
     position: absolute;
     top: 5%;
     left: 0;
     width: 50%;
     z-index: 1;
+    animation-delay: 0.4s;
 }
 
 .img-man {
@@ -308,7 +415,8 @@ main {
     left: 15%;
     width: 25%;
     z-index: 3;
-    box-shadow: 10px 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+    animation-delay: 1s;
 }
 
 .img-flower {
@@ -317,87 +425,24 @@ main {
     right: 5%;
     width: 42%;
     z-index: 2;
+    animation-delay: 0.7s;
 }
-
-.hero-collage img {
-    height: auto;
-    object-fit: contain;
-}
-
-/* 动画保持不变 */
-.fade-in-up {
-    opacity: 0;
-    animation: fadeInUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* 延迟保持不变 */
-.hero-text-box { animation: fadeInUp 1.2s ease-out forwards; animation-delay: 0.2s; }
-.img-wave { animation-delay: 0.4s; }
-.img-flower { animation-delay: 0.7s; }
-.img-man { animation-delay: 1s; }
-
-/* 响应式：针对手机端（竖屏）— flex column 堆叠布局 */
-@media (max-width: 768px) {
-    .hero-container {
-        aspect-ratio: auto;       /* clear desktop aspect-ratio */
-        min-height: auto;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .hero-text-box {
-        position: relative;
-        top: auto;
-        right: auto;
-        left: auto;
-        width: 85%;
-        margin: 2rem auto 1.5rem;
-        z-index: 15;
-    }
-
-    .hero-collage {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 4 / 5;     /* give the collage its own shape */
-    }
-
-    .img-wave  { width: 70%; top: 0; left: 0; }
-    .img-man   { width: 40%; left: 5%; bottom: 0; }
-    .img-flower { width: 55%; right: 0; bottom: 0; }
-}
-
-
-
 
 /* ===================================
-   ARTICLES SECTION
+   7. ARTICLES SECTION
    =================================== */
 .articles-section .section-header {
-    padding-top: 15vh;    /* 15% of the screen height */
-    padding-bottom: 10vh; /* 10% of the screen height */
+    padding-top: 15vh;
+    padding-bottom: 10vh;
     text-align: center;
 }
 
 .articles-section h1 {
-    font-family: var(--font-heading); /* Playfair Display */
+    font-family: var(--font-heading);
     font-size: clamp(2rem, 4vw, 3.5rem);
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin: 0; /* Remove default margins to have precise control via padding */
+    margin: 0;
 }
 
 .section-header h2 {
@@ -446,7 +491,7 @@ main {
 }
 
 /* ===================================
-   PRODUCTS/ORIGINALS SUBSECTION
+   8. PRODUCTS / ORIGINALS SUBSECTION
    =================================== */
 .originals-subsection {
     margin-top: var(--spacing-lg);
@@ -517,16 +562,14 @@ main {
 }
 
 /* ============================================
-   PRODUCT DETAIL PAGE (product-detail-site/*)
+   9. PRODUCT DETAIL PAGE
    ============================================ */
-
-/* ── Page Layout ── */
 .product-detail-page {
     padding-top: calc(var(--header-height) + 2rem);
     min-height: 100vh;
 }
 
-/* ── Breadcrumb ── */
+/* Breadcrumb */
 .breadcrumb {
     max-width: var(--max-width);
     margin: 0 auto 2rem;
@@ -542,7 +585,7 @@ main {
 .breadcrumb .sep { opacity: 0.5; }
 .breadcrumb .current { color: var(--text-color); }
 
-/* ── Prev / Next ── */
+/* Prev / Next */
 .prev-next {
     max-width: var(--max-width);
     margin: 0 auto 2rem;
@@ -555,7 +598,7 @@ main {
 .prev-next a { color: var(--text-light); }
 .prev-next a:hover { color: var(--text-color); opacity: 1; }
 
-/* ── Two-column product layout ── */
+/* Layout a due colonne */
 .product-detail-grid {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -566,7 +609,7 @@ main {
     align-items: start;
 }
 
-/* ── Gallery ── */
+/* Galleria */
 .gallery-main {
     width: 100%;
     aspect-ratio: 3/4;
@@ -594,18 +637,17 @@ main {
     opacity: 1;
 }
 
-/* ── Product description text (below both columns) ── */
+/* Descrizione prodotto (sotto le due colonne) */
 .product-description {
-    max-width: var(--max-width);
+    max-width: 760px;
     margin: 0 auto;
-    padding: 2rem 0rem 3rem;
+    padding: 2rem 0 3rem;
     font-size: 1.1rem;
     line-height: 1.5;
     color: var(--text-color);
-    max-width: 760px;
 }
 
-/* ── Right panel ── */
+/* Pannello destro */
 .product-info-panel h1 {
     font-family: var(--font-heading);
     font-size: 1.8rem;
@@ -618,7 +660,7 @@ main {
     color: var(--text-color);
 }
 
-/* Quantity */
+/* Quantità */
 .qty-label {
     font-size: 0.8rem;
     letter-spacing: 0.05em;
@@ -636,25 +678,25 @@ main {
     background: white;
 }
 
-/* Out of stock */
+/* Esaurito */
 .out-of-stock-btn {
     width: 100%;
-    background: #e8e3dc;          /* light warm gray */
-    color: #a09990;               /* muted gray text */
+    background: #e8e3dc;
+    color: #a09990;
     border: none;
-    padding: 1rem 1rem;
+    padding: 1rem;
     font-size: 0.95rem;
     letter-spacing: 0.03em;
-    cursor: default;              /* no pointer cursor */
+    cursor: default;
     margin-bottom: 1.5rem;
-    transition: none;             /* no hover animation */
+    transition: none;
 }
 .out-of-stock-btn:hover { background: #e8e3dc; }
 .add-to-cart-btn.added {
     background: #4a7a5a;
 }
 
-/* ── Accordion sections ── */
+/* Accordion */
 .accordion {
     border-top: 1px solid #ddd;
 }
@@ -697,11 +739,11 @@ main {
 }
 .accordion-body-inner p { margin-bottom: 0.25rem; }
 
-/* ── Cart Overlay ── */
+/* Overlay carrello */
 .cart-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     z-index: 900;
     opacity: 0;
     pointer-events: none;
@@ -712,7 +754,7 @@ main {
     pointer-events: all;
 }
 
-/* ── Cart Sidebar ── */
+/* Sidebar carrello */
 .cart-sidebar {
     position: fixed;
     top: 0;
@@ -724,8 +766,8 @@ main {
     display: flex;
     flex-direction: column;
     transform: translateX(100%);
-    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-    box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
 }
 .cart-sidebar.open { transform: translateX(0); }
 
@@ -854,161 +896,14 @@ main {
     color: var(--text-light);
 }
 
-/* ── Cart icon in header ── */
-.cart-icon-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-.cart-badge {
-    position: absolute;
-    top: -6px;
-    right: -8px;
-    background: #5a4a3a;
-    color: white;
-    border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    font-size: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    display: none;
-}
-.cart-badge.visible { display: flex; }
-
-/* ── Responsive ── */
-@media (max-width: 768px) {
-    .product-detail-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    .cart-sidebar { width: 100%; }
-}
-
-
 /* ===================================
-   CONTACT FORM SECTION
-   =================================== */
-.contact-section {
-    background-color: var(--secondary-color); 
-    padding: var(--spacing-xl) 0;
-}
-
-.contact-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.contact-info {
-    text-align: center;
-    background-color: #000000;
-    color: #ffffff;
-    padding: 3rem 2rem; /* Adds space around the text inside the black box */
-    margin-bottom: var(--spacing-lg);
-    width: 100%;
-}
-
-.contact-info h2 {
-    margin-bottom: var(--spacing-sm);
-    color: #ffffff; /* Explicitly white */
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-}
-
-.contact-info p, 
-.contact-info a {
-    color: #ffffff; 
-    text-decoration: none;
-    font-size: 1.1rem;
-}
-
-.contact-form {
-    display: grid;
-    gap: var(--spacing-md);
-    background-color: var(--secondary-color); /* Form area remains white */
-    padding: 2rem 0;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-md);
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group label {
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-light);
-}
-
-.form-group input,
-.form-group textarea {
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 2px;
-    font-family: inherit;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-.form-group textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-.submit-btn {
-    padding: 1rem 2.5rem;
-    background: var(--primary-color);
-    color: var(--secondary-color);
-    border: none;
-    border-radius: 2px;
-    font-size: 1rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    transition: background 0.3s ease;
-    justify-self: center;
-}
-
-.submit-btn:hover {
-    background: #333;
-}
-
-.form-success {
-    display: none;
-    text-align: center;
-    padding: var(--spacing-md);
-    background: #e8f5e9;
-    border-radius: 2px;
-    color: #2e7d32;
-}
-
-.form-success.show {
-    display: block;
-}
-
-/* ===================================
-   COMMISSIONS PAGE
+   10. COMMISSIONS PAGE
    =================================== */
 .commissions-hero {
-    background: url('../images/commission-background.jpeg') center / 100% 100% no-repeat;
+    background: url('../images/img-commissions.jpg') center / cover no-repeat;
     padding: var(--spacing-xl) 0;
     text-align: center;
+    width: 100%;
 }
 
 .commissions-hero h1 {
@@ -1023,7 +918,7 @@ main {
 
 .commissions-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: var(--spacing-xl);
     align-items: start;
 }
@@ -1054,9 +949,11 @@ main {
 .commission-form {
     display: grid;
     gap: var(--spacing-md);
+    min-width: 0;
 }
 
 .form-group select {
+    width: 100%;
     padding: 0.75rem 1rem;
     border: 1px solid var(--border-color);
     border-radius: 2px;
@@ -1090,7 +987,7 @@ main {
 }
 
 /* ===================================
-   PRINTS PAGE
+   11. PRINTS PAGE
    =================================== */
 .prints-hero {
     background-image: url('../images/prints-background.jpeg');
@@ -1120,7 +1017,7 @@ main {
 }
 
 /* ===================================
-   ABOUT PAGE
+   12. ABOUT PAGE
    =================================== */
 .about-hero {
     background-image: url('../images/bio-background.png');
@@ -1174,25 +1071,138 @@ main {
 
 .bio-label {
     display: inline-block;
-    background-color: #f5f0e8; /* match your page background color */
+    background-color: #f5f0e8;
     padding: 1rem 4rem;
- /* controls the slant angle */
 }
 
 .bio-label em {
     display: inline-block;
- /* counter-skew so the text stays upright */
     font-style: normal;
-    color: #151414; /* or your usual heading color */
+    color: #151414;
 }
 
 /* ===================================
-   FOOTER
+   13. CONTACT FORM SECTION
    =================================== */
-.site-footer {
+.contact-section {
+    background-color: var(--secondary-color);
+    padding: var(--spacing-xl) 0;
+}
+
+.contact-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-info {
+    text-align: center;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 3rem 2rem;
+    margin-bottom: var(--spacing-lg);
+    width: 100%;
+}
+
+.contact-info h2 {
+    margin-bottom: var(--spacing-sm);
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+}
+
+.contact-info p,
+.contact-info a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.contact-form {
+    display: grid;
+    gap: var(--spacing-md);
+    background-color: var(--secondary-color);
+    padding: 2rem 0;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.submit-btn {
+    padding: 1rem 2.5rem;
     background: var(--primary-color);
     color: var(--secondary-color);
+    border: none;
+    border-radius: 2px;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: background 0.3s ease;
+    justify-self: center;
+}
+
+.submit-btn:hover {
+    background: #333;
+}
+
+.form-success {
+    display: none;
+    text-align: center;
+    padding: var(--spacing-md);
+    background: #e8f5e9;
+    border-radius: 2px;
+    color: #2e7d32;
+}
+
+.form-success.show {
+    display: block;
+}
+
+/* ===================================
+   14. FOOTER
+   =================================== */
+.site-footer {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
     padding: var(--spacing-lg) 0 var(--spacing-md);
+    margin-top: auto; /* garantisce che il footer resti in fondo */
+    width: 100%;
 }
 
 .footer-content {
@@ -1206,9 +1216,10 @@ main {
     font-family: var(--font-primary);
     font-size: 1rem;
     font-weight: 600;
-    margin-bottom: var(--spacing-sm);
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    margin-bottom: var(--spacing-sm);
+    color: var(--secondary-color);
 }
 
 .footer-section p,
@@ -1228,13 +1239,13 @@ main {
 }
 
 .social-icon {
-    width: 30px;
-    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
     transition: background 0.3s ease;
 }
 
@@ -1254,10 +1265,10 @@ main {
 }
 
 /* ===================================
-   RESPONSIVE DESIGN
+   15. RESPONSIVE / MEDIA QUERIES
    =================================== */
 
-/* ── Tablet breakpoint ── */
+/* ── Tablet ── */
 @media (max-width: 1024px) {
     .main-nav ul {
         gap: var(--spacing-md);
@@ -1268,21 +1279,26 @@ main {
     }
 }
 
-/* ── Mobile breakpoint ── */
-@media (max-width: 768px) {
+/* ── Mobile ── */
+@media screen and (max-width: 768px) {
     :root {
         --header-height: 70px;
     }
-    
+
     h1 {
         font-size: 2rem;
     }
-    
+
     h2 {
         font-size: 1.75rem;
     }
-    
-    /* ── Mobile navigation overlay ── */
+
+    /* Bottone hamburger */
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    /* Navigazione mobile: pannello a scomparsa da sinistra */
     .main-nav {
         position: fixed;
         top: var(--header-height);
@@ -1295,18 +1311,18 @@ main {
         z-index: 1000;
         overflow-y: auto;
     }
-    
+
     .main-nav.active {
         left: 0;
     }
-    
+
     .main-nav ul {
         flex-direction: column;
         padding: var(--spacing-lg);
         gap: var(--spacing-md);
         align-items: flex-start;
     }
-    
+
     .main-nav a {
         font-size: 1rem;
     }
@@ -1319,16 +1335,42 @@ main {
     .lang-switcher {
         margin-left: 0;
     }
-    
-    .mobile-menu-toggle {
+
+    /* Hero home */
+    .hero-container {
+        aspect-ratio: auto;
+        min-height: auto;
         display: flex;
+        flex-direction: column;
     }
-    
-    /* ── Grid layouts → single column ── */
-    .hero-grid,
+
+    .hero-text-box {
+        position: relative;
+        top: auto;
+        right: auto;
+        left: auto;
+        width: 85%;
+        margin: 2rem auto 1.5rem;
+        z-index: 15;
+    }
+
+    .hero-collage {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 5;
+    }
+
+    .img-wave { width: 70%; top: 0; left: 0; }
+    .img-man { width: 40%; left: 5%; bottom: 0; }
+    .img-flower { width: 55%; right: 0; bottom: 0; }
+
+    /* Griglie a colonna singola */
     .commissions-grid,
     .bio-section {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .commissions-grid {
@@ -1338,11 +1380,19 @@ main {
     .commission-info {
         padding-right: 0;
     }
-    
+
+    .commissions-hero {
+        padding: 4rem 1rem;
+    }
+
+    .commissions-hero h1 {
+        font-size: 1.5rem;
+    }
+
     .form-row {
         grid-template-columns: 1fr;
     }
-    
+
     .products-grid {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: var(--spacing-md);
@@ -1352,11 +1402,12 @@ main {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
     }
-    
-    .bio-section {
-        grid-template-columns: 1fr;
+
+    .articles-section .section-header {
+        padding-top: 8vh;
+        padding-bottom: 5vh;
     }
-    
+
     .bio-image {
         max-width: 400px;
         margin: 0 auto;
@@ -1366,7 +1417,11 @@ main {
         padding-left: 0;
     }
 
-    /* ── Footer → single column ── */
+    .bio-label {
+        padding: 0.75rem 1.5rem;
+    }
+
+    /* Footer a colonna singola */
     .footer-content {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
@@ -1377,7 +1432,16 @@ main {
         justify-content: center;
     }
 
-    /* ── Product detail mobile polish ── */
+    /* Product detail */
+    .product-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .cart-sidebar {
+        width: 100%;
+    }
+
     .product-description {
         padding: 1.5rem 1rem 2rem;
     }
@@ -1391,7 +1455,7 @@ main {
         padding: 0 1rem;
     }
 
-    /* ── Contact section mobile ── */
+    /* Contatti */
     .contact-info h2 {
         font-size: 1.8rem;
     }
@@ -1400,23 +1464,9 @@ main {
         padding: 0 var(--spacing-sm);
     }
 
-    /* ── Commission hero text ── */
-    .commissions-hero h1 {
-        font-size: 1.5rem;
-    }
-
-    .bio-label {
-        padding: 0.75rem 1.5rem;
-    }
-
-    /* ── Section spacing ── */
+    /* Sezioni */
     .section {
         padding: var(--spacing-md) 0;
-    }
-
-    .articles-section .section-header {
-        padding-top: 8vh;
-        padding-bottom: 5vh;
     }
 }
 
@@ -1435,77 +1485,4 @@ main {
     .commission-form-container {
         padding: var(--spacing-md);
     }
-}
-
-/* ===================================
-   UTILITIES
-   =================================== */
-.text-center {
-    text-align: center;
-}
-
-.mb-lg {
-    margin-bottom: var(--spacing-lg);
-}
-
-.mt-lg {
-    margin-top: var(--spacing-lg);
-}
-
-.hidden {
-    display: none;
-}
-
-.fade-in {
-    animation: fadeIn 0.6s ease-in;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ===================================
-   LOADING STATES
-   =================================== */
-.loading {
-    opacity: 0.6;
-    pointer-events: none;
-}
-
-.skeleton {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-    0% {
-        background-position: 200% 0;
-    }
-    100% {
-        background-position: -200% 0;
-    }
-}
-
-/* Language Switcher */
-.lang-switcher {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: clamp(10px, 0.9vw, 14px);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    font-weight: 400;
-    margin-left: 2rem; /* creates space before the log in button */
-}
-.lang-switcher .active {
-    font-weight: 600;
-    text-decoration: underline;
 }
