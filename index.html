@@ -1,28 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Rosagrata Vanessa</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rosagrata Vanessa | Italian Painter & Artist in Paris</title>
+
+    <!-- Meta SEO & Redirection de secours si JS désactivé -->
+    <meta name="description" content="Welcome to Rosagrata Vanessa - Italian painter and content creator living in Paris. Redirecting to your preferred language.">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="refresh" content="0; url=/en/index.html">
+
+    <!-- Indicatifs multilingues pour Google (SEO) -->
+    <link rel="canonical" href="https://vrosart.com/en/index.html">
+    <link rel="alternate" hreflang="en" href="https://vrosart.com/en/index.html">
+    <link rel="alternate" hreflang="fr" href="https://vrosart.com/fr/index.html">
+    <link rel="alternate" hreflang="x-default" href="https://vrosart.com/en/index.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+
+    <!-- Redirection automatique selon la langue du navigateur -->
     <script>
         (function() {
-            // 默认语言
             var defaultLang = 'en';
-
-            // 支持的语言列表
             var supportedLangs = ['en', 'fr'];
+            var userLang = (navigator.language || navigator.userLanguage || 'en').substr(0, 2).toLowerCase();
+            var targetLang = supportedLangs.indexOf(userLang) > -1 ? userLang : defaultLang;
 
-            // 从浏览器设置中获取首选语言，并取前两位（如 'fr-FR' 变成 'fr'）
-            var browserLang = (navigator.language || navigator.userLanguage).substr(0, 2);
-
-            // 检查浏览器语言是否在支持列表中
-            var lang = supportedLangs.indexOf(browserLang) > -1 ? browserLang : defaultLang;
-
-            // 跳转到对应语言的首页
-            // Use relative path for GitHub Pages compatibility
-            window.location.replace(lang + '/');
+            window.location.replace('/' + targetLang + '/index.html');
         })();
     </script>
 </head>
 <body>
-    <p>Redirecting...</p>
+    <noscript>
+        <p>Redirecting to <a href="/en/index.html">English version</a> | Redirection vers la <a href="/fr/index.html">version française</a>.</p>
+    </noscript>
 </body>
 </html>

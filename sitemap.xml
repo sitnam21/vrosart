@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- Page d'accueil FR -->
+  <url>
+    <loc>https://vrosart.com/fr/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vrosart.com/fr/index.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vrosart.com/en/index.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vrosart.com/en/index.html"/>
+    <priority>1.00</priority>
+  </url>
+
+  <!-- Page d'accueil EN -->
+  <url>
+    <loc>https://vrosart.com/en/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vrosart.com/en/index.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vrosart.com/fr/index.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vrosart.com/en/index.html"/>
+    <priority>1.00</priority>
+  </url>
+
+  <!-- Page À propos FR -->
+  <url>
+    <loc>https://vrosart.com/fr/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vrosart.com/fr/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vrosart.com/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vrosart.com/en/about.html"/>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Page About EN -->
+  <url>
+    <loc>https://vrosart.com/en/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vrosart.com/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vrosart.com/fr/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vrosart.com/en/about.html"/>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Page Commissions FR -->
+  <url>
+    <loc>https://vrosart.com/fr/commissions.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vrosart.com/fr/commissions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vrosart.com/en/commissions.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vrosart.com/en/commissions.html"/>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Page Commissions EN -->
+  <url>
+    <loc>https://vrosart.com/en/commissions.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vrosart.com/en/commissions.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vrosart.com/fr/commissions.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vrosart.com/en/commissions.html"/>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Page Prints FR -->
+  <url>
+    <loc>https://vrosart.com/fr/prints.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vrosart.com/fr/prints.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vrosart.com/en/prints.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vrosart.com/en/prints.html"/>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Page Prints EN -->
+  <url>
+    <loc>https://vrosart.com/en/prints.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vrosart.com/en/prints.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vrosart.com/fr/prints.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vrosart.com/en/prints.html"/>
+    <priority>0.80</priority>
+  </url>
+
+</urlset>

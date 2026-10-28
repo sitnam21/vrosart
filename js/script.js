@@ -624,41 +624,58 @@ new App();
 const isProductPage = window.location.pathname.includes('/product-detail-site/');
 const base = isProductPage ? '../' : '';
 
-// Header FR
-const headerFR = document.getElementById('main-header-fr');
-if (headerFR) {
-    fetch(base + 'header-fr.html')
-        .then(r => r.text())
-        .then(data => {
-            headerFR.innerHTML = data;
-        });
+// Fonction globale pour corriger l'URL du bouton de changement de langue
+function updateLanguageLink() {
+    const langLink = document.getElementById('lang-switch-link');
+    if (!langLink) return;
+
+    const currentPath = window.location.pathname;
+
+    if (currentPath.includes('/fr/')) {
+        langLink.setAttribute('href', currentPath.replace('/fr/', '/en/'));
+    } else if (currentPath.includes('/en/')) {
+        langLink.setAttribute('href', currentPath.replace('/en/', '/fr/'));
+    }
 }
 
-// Header EN
+// 1. Chargement dynamique du Header EN
 const headerEN = document.getElementById('main-header-en');
 if (headerEN) {
     fetch(base + 'header-en.html')
         .then(r => r.text())
         .then(data => {
             headerEN.innerHTML = data;
+            updateLanguageLink(); // <-- Mise à jour du lien UNE FOIS le HTML injecté !
         });
 }
+
+// 2. Chargement dynamique du Header FR
+const headerFR = document.getElementById('main-header-fr');
+if (headerFR) {
+    fetch(base + 'header-fr.html') // ou header.html selon ton fichier
+        .then(r => r.text())
+        .then(data => {
+            headerFR.innerHTML = data;
+            updateLanguageLink(); // <-- Mise à jour du lien UNE FOIS le HTML injecté !
+        });
+}
+
+// 3. Gestion du menu mobile (Délégation d'événements)
 document.addEventListener('click', function (e) {
-    // 1. Clic sur le bouton du menu hamburger
+    // Clic sur le bouton hamburger
     const menuToggle = e.target.closest('#mobile-menu-toggle');
     if (menuToggle) {
         const mainNav = document.getElementById('main-nav');
         if (mainNav) {
             const isOpen = mainNav.classList.toggle('active');
             menuToggle.classList.toggle('active');
-
             menuToggle.setAttribute('aria-expanded', isOpen);
             document.body.style.overflow = isOpen ? 'hidden' : 'auto';
         }
         return;
     }
 
-    // 2. Clic sur un lien à l'intérieur du menu mobile
+    // Clic sur un lien à l'intérieur du menu mobile
     const navLink = e.target.closest('#main-nav a');
     if (navLink) {
         const mainNav = document.getElementById('main-nav');
@@ -671,5 +688,4 @@ document.addEventListener('click', function (e) {
         }
         document.body.style.overflow = 'auto';
     }
-
 });
